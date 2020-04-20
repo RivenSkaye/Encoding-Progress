@@ -15,6 +15,7 @@ These names should be pretty self-explanatory, but you never know.
 | Dropped | This was too much for me. Or at least for now. I might get back to it later, but as-is I will not encode any episodes for it. Things like OPs, EDs and the scenes for insert songs may still be filtered out for [AMQ](https://animemusicquiz.com) |
 | Completed | Hooray! I've encoded everything for this source! Or at least I wrote all the scripts and came out ~~sane~~ alive on the other end. |
 | Ongoing | I'm still working on this. I don't expect there to be more than one at a time here, but that may change if I ever git gud. |
+| Misc. | Random stuff I do for other people, most will be (NC)OPs/EDs or video for cleaning insert songs in anime. These end up in AMQ |
 
 
 
