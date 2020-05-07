@@ -5,7 +5,7 @@ A repository for me to dump my encoding scripts. Both as reference and to track 
 Basically not keeping everything on my disc endlessly. And I like seeing how I improve over time.
 As I get better, this stuff will slowly become a nice basic reference for me to get an idea how to handle a source and where to improve. And it's also something for me to get back to a source with some time and improve at least the scripts.
 
-## You're a shit encoder!##
+## You're a shit encoder! ##
 I know I am, thanks Cpt. Obvious! That said, feel free to shoot in a PR if you see any room for improvement. When you do, please give me a heads up on how it's an improvement and what additional requirements I need for the script to run.
 
 # Directories #
