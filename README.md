@@ -20,4 +20,4 @@ These names should be pretty self-explanatory, but you never know.
 
 
 # Contacting me #
-You can either contact me here, or on Discord as **Riven_Skaye#0042**
+You can either contact me here, or on Discord as **Scuffed Riven#0042**
