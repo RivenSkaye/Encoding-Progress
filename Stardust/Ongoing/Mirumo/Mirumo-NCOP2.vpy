@@ -71,7 +71,7 @@ mask = core.std.Prewitt(darken)
 mask = core.std.Maximum(mask)
 mask = vsutil.iterate(mask, core.std.Minimum, 2)
 
-# Use the meme denoiser, this tends to work well on DVDs. Requires 32-bit input
+# Replaced w2x with a good, but slow denoiser. Some scenes are still hurt, but it looks good
 denoise = mvf.BM3D(darken, sigma=[3.6,2.2,2.2], radius1=3, profile1="fast", refine=1, full=False)
 denoise = vsutil.depth(denoise, 16) # Convert back down to 16 for normal filters
 merged = core.std.MaskedMerge(denoise, darken, mask)
