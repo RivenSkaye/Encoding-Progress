@@ -3,12 +3,12 @@ import lvsfunc as lvf
 import kagefunc as kgf
 import vsutil
 import nnedi3_rpow2
-import vsTAAmbk as taa
 import havsfunc as haf
+import mvsfunc as mvf
 core = vs.core
 
 # Load the source, OP in this case. force LSMASH because this is a DVD remux
-src = lvf.src(r"D:\Releases\Stardust\Mirumo\Vol10-chapter01.mkv", force_lsmas=True)
+src = lvf.src(r"D:\Releases\Sources\Mirumo\Bonus Disc\Mirumo Bonus Disc_t04.mkv", force_lsmas=True)
 
 # Deinterlace and convert to 16 bit for working in high precision
 deint = lvf.deinterlace.decomb(src, TFF=True, decimate=False)
@@ -72,7 +72,7 @@ mask = core.std.Maximum(mask)
 mask = vsutil.iterate(mask, core.std.Minimum, 2)
 
 # Use the meme denoiser, this tends to work well on DVDs. Requires 32-bit input
-denoise = core.caffe.Waifu2x(vsutil.depth(darken, 32), noise=0, scale=1, block_w=144, block_h=108, model=6, cudnn=True)
+denoise = mvf.BM3D(darken, sigma=[3.6,2.2,2.2], radius1=3, profile1="fast", refine=1, full=False)
 denoise = vsutil.depth(denoise, 16) # Convert back down to 16 for normal filters
 merged = core.std.MaskedMerge(denoise, darken, mask)
 

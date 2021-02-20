@@ -18,8 +18,8 @@ dering = haf.HQDeringmod(w2x, mrad=2, msmooth=3, incedge=True, nrmode=1, sharp=2
 # Somehow stretching sooner caused a boatload of artifacting
 stretch = core.resize.Spline36(fvf.Depth(dering, 32), get_w(480), 480)
 # Deband it, this was made worse with stretching but required either way
-debanded = core.f3kdb.Deband(fvf.Depth(stretch, 16), y=48, cb=48, cr=48, grainy=24, output_depth=16)
+debanded = core.f3kdb.Deband(fvf.Depth(stretch, 16), y=48, cb=48, cr=48, grainy=0, output_depth=16)
 # Make it pretty!
-grain = kgf.adaptive_grain(debanded, 0.65, luma_scaling=16)
+grain = kgf.adaptive_grain(debanded, 0.15, luma_scaling=20)
 # Output 8-bit because it's going to be an AMQ webm
 fvf.Depth(grain, 8).set_output()
