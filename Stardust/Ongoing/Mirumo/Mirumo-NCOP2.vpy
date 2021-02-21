@@ -39,28 +39,28 @@ resize_y = core.resize.Spline16(y, height=540)
 # 1668-1720: 0.5
 # 1721-2158: 0
 # Fix up the shift on the chroma planes and make this baby YUV444P16
-res_u0 = core.resize.Spline16(u, height=540, src_left=0)
-res_v0 = core.resize.Spline16(v, height=540, src_left=0)
-res_u25 = core.resize.Spline16(u, height=540, src_left=0.25)
-res_v25 = core.resize.Spline16(v, height=540, src_left=0.25)
-res_u5 = core.resize.Spline16(u, height=540, src_left=0.5)
-res_v5 = core.resize.Spline16(v, height=540, src_left=0.5)
-res_u11 = core.resize.Spline16(u, height=540, src_left=1.1)
-res_v11 = core.resize.Spline16(v, height=540, src_left=1.1)
-res_u16 = core.resize.Spline16(u, height=540, src_left=1.6)
-res_v16 = core.resize.Spline16(v, height=540, src_left=1.6)
+res_u0 = core.resize.Spline16(u, width=706, height=540, src_left=0)
+res_v0 = core.resize.Spline16(v, width=706, height=540, src_left=0)
+res_u25 = core.resize.Spline16(u, width=706, height=540, src_left=0.25)
+res_v25 = core.resize.Spline16(v, width=706, height=540, src_left=0.25)
+res_u5 = core.resize.Spline16(u, width=706, height=540, src_left=0.5)
+res_v5 = core.resize.Spline16(v, width=706, height=540, src_left=0.5)
+res_u11 = core.resize.Spline16(u, width=706, height=540, src_left=1.1)
+res_v11 = core.resize.Spline16(v, width=706, height=540, src_left=1.1)
+res_u16 = core.resize.Spline16(u, width=706, height=540, src_left=1.6)
+res_v16 = core.resize.Spline16(v, width=706, height=540, src_left=1.6)
 
 # Mix and match the ranges for the U plane
 resize_u = lvf.rfs(clip_a=res_u25, clip_b=res_u0, ranges=[(288, 435), (808, 1432), (1649, 1667), (1721, 2158)])
 resize_u = lvf.rfs(clip_a=resize_u, clip_b=res_u16, ranges=[(436, 537)])
-resize_u = lvf.rfs(clip_a=resize_u, clip_b=res_u11, ranges=[(1433, 1523), (1556, 1580)])
-resize_u = lvf.rfs(clip_a=resize_u, clip_b=res_u5, ranges=[(1524, 1555), (1632, 1648), (1668, 1720)])
+resize_u = lvf.rfs(clip_a=resize_u, clip_b=res_u11, ranges=[(1433, 1523), (1524, 1580)])
+resize_u = lvf.rfs(clip_a=resize_u, clip_b=res_u5, ranges=[(1632, 1648), (1668, 1720)])
 
 # Do the same for the V plane
 resize_v = lvf.rfs(clip_a=res_v25, clip_b=res_v0, ranges=[(288, 435), (808, 1432), (1649, 1667), (1721, 2158)])
 resize_v = lvf.rfs(clip_a=resize_v, clip_b=res_v16, ranges=[(436, 537)])
-resize_v = lvf.rfs(clip_a=resize_v, clip_b=res_v11, ranges=[(1433, 1523), (1556, 1580)])
-resize_v = lvf.rfs(clip_a=resize_v, clip_b=res_v5, ranges=[(1524, 1555), (1632, 1648), (1668, 1720)])
+resize_v = lvf.rfs(clip_a=resize_v, clip_b=res_v11, ranges=[(1433, 1523), (1524, 1580)])
+resize_v = lvf.rfs(clip_a=resize_v, clip_b=res_v5, ranges=[(1632, 1648), (1668, 1720)])
 
 # Merge them again
 resize = core.std.ShufflePlanes([resize_y, resize_u, resize_v], [0,0,0], vs.YUV)
