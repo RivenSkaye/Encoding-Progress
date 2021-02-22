@@ -7,8 +7,8 @@ import havsfunc as haf
 import mvsfunc as mvf
 core = vs.core
 
-# Load the source, OP in this case. force LSMASH because this is a DVD remux
-src = lvf.src(r"D:\Releases\Sources\Mirumo\Volume 10\fulldisc\ep37 - 2 - Part A.mkv", force_lsmas=True)
+# Load the source, Part A of the ep. force LSMASH because this is a DVD remux
+src = lvf.src(r"D:\Releases\Sources\Mirumo\Volume 10\fulldisc\ep39 - 2 - Part A.mkv", force_lsmas=True)
 
 # Deinterlace and convert to 16 bit for working in high precision
 deint = lvf.deinterlace.decomb(src, TFF=True, decimate=False)
@@ -29,18 +29,26 @@ resize_y = core.resize.Spline16(y, height=540)
 # 00000 - 00122: 0
 # 00123 - 00553: 0.75
 # 00554 - 00697: 0.125 => episode title? This text has bleed
-# 00698 - 00932: 0.25 <= Might be a larger range
+# 00698 - 01219: 0.25
+# 01220 - 01350: 0
+# 01351 - 01439: 0.5
+# 01440 - 01955: 0.25
+# 01956 - 02913: 0.5
+# 02914 - 03044: 0
+# 03045 - xxxxx: 0.25
 
 # Shift the U plane values
 res_u0 = core.resize.Spline16(u, width=706, height=540, src_left=0)
 res_u125 = core.resize.Spline16(u, width=706, height=540, src_left=0.125)
 res_u25 = core.resize.Spline16(u, width=706, height=540, src_left=0.25)
+res_u5 = core.resize.Spline16(u, width=706, height=540, src_left=0.5)
 res_u75 = core.resize.Spline16(u, width=706, height=540, src_left=0.75)
 
 # Shift the V plane values
 res_v0 = core.resize.Spline16(v, width=706, height=540, src_left=0)
 res_v125 = core.resize.Spline16(v, width=706, height=540, src_left=0.125)
 res_v25 = core.resize.Spline16(v, width=706, height=540, src_left=0.25)
+res_v5 = core.resize.Spline16(v, width=706, height=540, src_left=0.5)
 res_v75 = core.resize.Spline16(v, width=706, height=540, src_left=0.75)
 
 resize = core.std.ShufflePlanes([resize_y, res_u25, res_v25], [0,0,0], vs.YUV)
