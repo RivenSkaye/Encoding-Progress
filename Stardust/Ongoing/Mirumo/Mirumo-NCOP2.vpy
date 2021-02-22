@@ -6,6 +6,7 @@ import nnedi3_rpow2
 import havsfunc as haf
 import mvsfunc as mvf
 core = vs.core
+core.max_cache_size = 6144
 
 # Load the source, OP in this case. force LSMASH because this is a DVD remux
 src = lvf.src(r"D:\Releases\Sources\Mirumo\Bonus Disc\Mirumo Bonus Disc_t04.mkv", force_lsmas=True)
@@ -80,7 +81,20 @@ merged = core.std.MaskedMerge(denoise, darken, mask)
 scaled = nnedi3_rpow2.nnedi3_rpow2(merged).resize.Spline36(width=706, height=540, format=vs.YUV420P16)
 
 deband = core.f3kdb.Deband(scaled, range=16, y=24, cb=18, cr=18, grainy=14, grainc=9, output_depth=16)
-grain = kgf.adaptive_grain(deband, 0.1, luma_scaling=8)
+
+# This scene has some special issues. So we're replacing a few frames.
+# No idea why this scene specifically had these issues
+# Until offending frame + replacement  + Remaining clip
+replace = deband[:1534] + deband[1535] + deband[1535:]
+replace = replace[:1538] + replace[1539] + replace[1539:]
+replace = replace[:1542] + replace[1543] + replace[1543:]
+replace = replace[:1550] + replace[1551] + replace[1551:]
+replace = replace[:1554] + replace[1555] + replace[1555:]
+replace = replace[:1570] + replace[1571] + replace[1571:]
+replace = replace[:1573] + replace[1572] + replace[1574:]
+replace = replace[:1577] + replace[1576] + replace[1578:]
+
+grain = kgf.adaptive_grain(replace, 0.1, luma_scaling=8)
 out = vsutil.depth(grain, 10)
 
 out.set_output()
