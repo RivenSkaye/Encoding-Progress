@@ -8,7 +8,7 @@ import mvsfunc as mvf
 core = vs.core
 
 # Load the source, Part A of the ep. force LSMASH because this is a DVD remux
-src = lvf.src(r"D:\Releases\Sources\Mirumo\Volume 10\fulldisc\ep39 - 2 - Part A.mkv", force_lsmas=True)
+src = lvf.src(r"D:\Releases\Sources\Mirumo\Volume 10\fulldisc\ep37 - 2 - Part A.mkv", force_lsmas=True)
 
 # Deinterlace and convert to 16 bit for working in high precision
 deint = lvf.deinterlace.decomb(src, TFF=True, decimate=False)
