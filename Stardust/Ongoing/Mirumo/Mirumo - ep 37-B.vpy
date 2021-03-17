@@ -8,7 +8,7 @@ import mvsfunc as mvf
 core = vs.core
 
 # Load the source, Part A of the ep. force LSMASH because this is a DVD remux
-src = lvf.src(r"D:\Releases\Sources\Mirumo\Volume 10\fulldisc\ep37 - 2 - Part A.mkv", force_lsmas=True)
+src = lvf.src(r"D:\Releases\Sources\Mirumo\Volume 10\fulldisc\ep37 - 3 - Part B.mkv", force_lsmas=True)
 
 # Deinterlace and convert to 16 bit for working in high precision
 deint = lvf.deinterlace.decomb(src, TFF=True, decimate=False)
@@ -23,52 +23,35 @@ resize_y = core.resize.Spline16(y, height=540)
 
 # Resizing the chroma planes. And it looks like we'll be scenefiltering once again.
 # There's varying chroma shifts again, range time:
-# 00000 - 00122: 0
-# 00123 - 00553: 0.75
-# 00554 - 00697: 0.125 => episode title? This text has bleed
-# 00698 - 01219: 0.25
-# 01220 - 01350: 0
-# 01351 - 01439: 0.5
-# 01440 - 01955: 0.25
-# 01956 - 02913: 0.5
-# 02914 - 03044: 0
-# 03045 - 03196: 0.25
-# 03170 - 03276: 0
-# 03277 - 03487: 0.5
-# 03488 - 03595: 0
-# 03596 - 04199: 0.25
-# 04200 - 04953: 0
-# 04954 - 05012: 0.25
-# 05013 - 08128: 0
-# 08129 - 08322: 0.25
-# 08323 - 13923: 0
-# 13924 - 13982: 0.25
-# 13983 - 14580: 0
-# 14581 - 14645: 0.25
-# 14646 - 14865: 0 END OF PART A
+# 00000 - 00898: 0
+# 00899 - 01766: 0.25
+# 01767 - 02368: 0
+# 02369 - 02470: 0.25
+# 02471 - 02553: 0
+# 02554 - 02732: 0.25
+# 02733 - 03541: 0
+# 03542 - 03808: 0.25
+# 03809 - 04811: 0
+# 04812 - 05055: 0.25
+# 05056 - 05403: 0
+# 05404 - 05838: 0.25
+# 05839 - 06659: 0
+# 06660 - 06863: 0.25
+# 06864 - 12243: 0
+# 12244 - 12457: 0.25
+# 12458 - 14231: 0
+# 14232 - 14745: 0.25
 
 # Shift the U and V planes accordingly
 res_u0 = core.resize.Spline16(u, height=resize_y.height/2, src_left=0)
-res_u125 = core.resize.Spline16(u, height=resize_y.height/2, src_left=0.125)
 res_u25 = core.resize.Spline16(u, height=resize_y.height/2, src_left=0.25)
-res_u5 = core.resize.Spline16(u, height=resize_y.height/2, src_left=0.5)
-res_u75 = core.resize.Spline16(u, height=resize_y.height/2, src_left=0.75)
 
 res_v0 = core.resize.Spline16(v, height=resize_y.height/2, src_left=0)
-res_v125 = core.resize.Spline16(v, height=resize_y.height/2, src_left=0.125)
 res_v25 = core.resize.Spline16(v, height=resize_y.height/2, src_left=0.25)
-res_v5 = core.resize.Spline16(v, height=resize_y.height/2, src_left=0.5)
-res_v75 = core.resize.Spline16(v, height=resize_y.height/2, src_left=0.75)
 
-resize_u = lvf.rfs(clip_a=res_u0, clip_b=res_u25, ranges=[(698, 1219), (1440, 1955), (3045, 3196), (3596, 4199), (4954, 5012), (8129, 8322), (13924, 13982), (14581, 14645)])
-resize_u = lvf.rfs(clip_a=resize_u, clip_b=res_u125, ranges=[(554, 697)])
-resize_u = lvf.rfs(clip_a=resize_u, clip_b=res_u5, ranges=[(1351, 1439), (1956, 2913), (3277, 3487)])
-resize_u = lvf.rfs(clip_a=resize_u, clip_b=res_u75, ranges=[(123, 553)])
+resize_u = lvf.rfs(clip_a=res_u0, clip_b=res_u25, ranges=[(899, 1766), (2369, 2470), (2554, 2732), (3542, 3808), (4812, 5055), (5404, 5838), (6660, 6863), (12244, 12457), (14232, 14745)])
 
-resize_v = lvf.rfs(clip_a=res_v0, clip_b=res_v25, ranges=[(698, 1219), (1440, 1955), (3045, 3196), (3596, 4199), (4954, 5012), (8129, 8322), (13924, 13982), (14581, 14645)])
-resize_v = lvf.rfs(clip_a=resize_v, clip_b=res_v125, ranges=[(554, 697)])
-resize_v = lvf.rfs(clip_a=resize_v, clip_b=res_v5, ranges=[(1351, 1439), (1956, 2913), (3277, 3487)])
-resize_v = lvf.rfs(clip_a=resize_v, clip_b=res_v75, ranges=[(123, 553)])
+resize_v = lvf.rfs(clip_a=res_v0, clip_b=res_v25, ranges=[(899, 1766), (2369, 2470), (2554, 2732), (3542, 3808), (4812, 5055), (5404, 5838), (6660, 6863), (12244, 12457), (14232, 14745)])
 # merge the clips to a full YUV vid again
 resize = core.std.ShufflePlanes([resize_y, resize_u, resize_v], [0,0,0], vs.YUV)
 
@@ -84,13 +67,13 @@ mask = vsutil.iterate(mask, core.std.Minimum, 2)
 # Replaced w2x with a good, but slow denoiser. Some scenes are still hurt, but it looks good
 denoise = mvf.BM3D(darken, sigma=[1.7,1.2,1.2], radius1=3, profile1="fast", refine=1, full=False)
 # Dering it for a cleaner view in some scenes with less aggressive denoising
-dering = haf.HQDeringmod(denoise, mrad=2, mthr=42, nrmode=1, darkthr=3, sharp=0)
+dering = haf.HQDeringmod(denoise, mrad=2, mthr=32, nrmode=1, darkthr=3, sharp=0)
 merged = core.std.MaskedMerge(dering, darken, mask)
 
 # Use NNEDI3 to help fix aliasing on both chroma and luma
 scaled = nnedi3_rpow2.nnedi3_rpow2(merged, correct_shift=False).resize.Spline36(width=706, height=540)
 
-deband = core.f3kdb.Deband(scaled, range=16, y=24, cb=18, cr=18, grainy=14, grainc=9, output_depth=16)
+deband = core.f3kdb.Deband(scaled, range=16, y=24, cb=18, cr=18, grainy=14, grainc=6, output_depth=16)
 
 grain = kgf.adaptive_grain(deband, 0.2, luma_scaling=6.5)
 out = vsutil.depth(grain, 10)

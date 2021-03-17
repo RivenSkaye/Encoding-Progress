@@ -6,7 +6,7 @@ import nnedi3_rpow2
 import havsfunc as haf
 import mvsfunc as mvf
 core = vs.core
-core.max_cache_size = 6144
+core.max_cache_size = 8192
 
 # Load the source, OP in this case. force LSMASH because this is a DVD remux
 src = lvf.src(r"D:\Releases\Sources\Mirumo\Bonus Disc\Mirumo Bonus Disc_t04.mkv", force_lsmas=True)
@@ -39,17 +39,17 @@ resize_y = core.resize.Spline16(y, height=540)
 # 1649-1667: 0
 # 1668-1720: 0.5
 # 1721-2158: 0
-# Fix up the shift on the chroma planes and make this baby YUV444P16
-res_u0 = core.resize.Spline16(u, width=706, height=540, src_left=0)
-res_v0 = core.resize.Spline16(v, width=706, height=540, src_left=0)
-res_u25 = core.resize.Spline16(u, width=706, height=540, src_left=0.25)
-res_v25 = core.resize.Spline16(v, width=706, height=540, src_left=0.25)
-res_u5 = core.resize.Spline16(u, width=706, height=540, src_left=0.5)
-res_v5 = core.resize.Spline16(v, width=706, height=540, src_left=0.5)
-res_u11 = core.resize.Spline16(u, width=706, height=540, src_left=1.1)
-res_v11 = core.resize.Spline16(v, width=706, height=540, src_left=1.1)
-res_u16 = core.resize.Spline16(u, width=706, height=540, src_left=1.6)
-res_v16 = core.resize.Spline16(v, width=706, height=540, src_left=1.6)
+# Fix up the shift on the chroma planes
+res_u0 = core.resize.Spline16(u, height=resize_y.height/2, src_left=0)
+res_v0 = core.resize.Spline16(v, height=resize_y.height/2, src_left=0)
+res_u25 = core.resize.Spline16(u, height=resize_y.height/2, src_left=0.25)
+res_v25 = core.resize.Spline16(v, height=resize_y.height/2, src_left=0.25)
+res_u5 = core.resize.Spline16(u, height=resize_y.height/2, src_left=0.5)
+res_v5 = core.resize.Spline16(v, height=resize_y.height/2, src_left=0.5)
+res_u11 = core.resize.Spline16(u, height=resize_y.height/2, src_left=1.1)
+res_v11 = core.resize.Spline16(v, height=resize_y.height/2, src_left=1.1)
+res_u16 = core.resize.Spline16(u, height=resize_y.height/2, src_left=1.6)
+res_v16 = core.resize.Spline16(v, height=resize_y.height/2, src_left=1.6)
 
 # Mix and match the ranges for the U plane
 resize_u = lvf.rfs(clip_a=res_u25, clip_b=res_u0, ranges=[(288, 435), (808, 1432), (1649, 1667), (1721, 2158)])
@@ -62,23 +62,22 @@ resize_v = lvf.rfs(clip_a=res_v25, clip_b=res_v0, ranges=[(288, 435), (808, 1432
 resize_v = lvf.rfs(clip_a=resize_v, clip_b=res_v16, ranges=[(436, 537)])
 resize_v = lvf.rfs(clip_a=resize_v, clip_b=res_v11, ranges=[(1433, 1523), (1524, 1580)])
 resize_v = lvf.rfs(clip_a=resize_v, clip_b=res_v5, ranges=[(1632, 1648), (1668, 1720)])
-
 # Merge them again
 resize = core.std.ShufflePlanes([resize_y, resize_u, resize_v], [0,0,0], vs.YUV)
 
 # Darken the lines and mask, we'll need this to preserve detail
-darken = haf.FastLineDarkenMOD(resize, strength=29, protection=9)
-mask = core.std.Prewitt(darken)
-mask = core.std.Maximum(mask)
+darken = haf.FastLineDarkenMOD(resize, strength=34, protection=4)
+mask = core.std.Prewitt(darken).std.Maximum()
 mask = vsutil.iterate(mask, core.std.Minimum, 2)
 
 # Replaced w2x with a good, but slow denoiser. Some scenes are still hurt, but it looks good
-denoise = mvf.BM3D(darken, sigma=[3.6,2.2,2.2], radius1=3, profile1="fast", refine=1, full=False)
-denoise = vsutil.depth(denoise, 16) # Convert back down to 16 for normal filters
-merged = core.std.MaskedMerge(denoise, darken, mask)
+denoise = mvf.BM3D(darken, sigma=[2.1,1.5,1.5], radius1=3, profile1="fast", refine=1, full=False)
+# Dering it for a cleaner view in some scenes with less aggressive denoising
+dering = haf.HQDeringmod(denoise, mrad=2, mthr=48, nrmode=1, darkthr=3, sharp=0)
+merged = core.std.MaskedMerge(dering, darken, mask)
 
 # Use NNEDI3 to help fix aliasing on both chroma and luma
-scaled = nnedi3_rpow2.nnedi3_rpow2(merged).resize.Spline36(width=706, height=540, format=vs.YUV420P16)
+scaled = nnedi3_rpow2.nnedi3_rpow2(merged, correct_shift=False).resize.Spline36(width=706, height=540)
 
 deband = core.f3kdb.Deband(scaled, range=16, y=24, cb=18, cr=18, grainy=14, grainc=9, output_depth=16)
 
