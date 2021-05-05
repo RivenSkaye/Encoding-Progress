@@ -1,2 +1,4 @@
 **/cudnn_data/
 *workraw*.vpy
+*.egg-info/
+__pycache__/
