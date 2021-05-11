@@ -8,10 +8,11 @@ import havsfunc as haf
 from placebo import deband as pdb
 core = vs.core
 core.max_cache_size = 8192
-
+# This show uses the OP as ED for ep 1
 from AY_NCs import OP as NCED
-
-nced = NCED()[24:-24]
+ed_src = lvf.src(r"D:\Releases\Sources\[BDMV][Anima Yell!][アニマエール!][Vol.1-Vol.4 Fin]\[BDMV][181226]アニマエール! Vol.1\BD\BDMV\STREAM\00007.m2ts")
+# Do the filtering and set it aside for now
+nced = NCED(ed_src)[24:-24]
 
 src = lvf.src(r"D:\Releases\Sources\[BDMV][Anima Yell!][アニマエール!][Vol.1-Vol.4 Fin]\[BDMV][181226]アニマエール! Vol.1\BD\BDMV\STREAM\00003.m2ts")
 # Rescale using a modified version of Zastin's dogahomo()
@@ -44,7 +45,6 @@ deband = core.std.MaskedMerge(deband_a, dehalo, det_mask)
 # Finish up and output
 grain = kgf.adaptive_grain(deband, luma_scaling=7)
 out = vsutil.depth(grain, 10)
-
 # Use the NCOP to do a better job of cleaning up the OP as ED
 scrad_ed_mask = rvs.Scradit_mask(src, b=0.2, c=0.4, height=810, iters=6)[31552:33709]
 spliced = rvs.nc_splice(out, nced, 31552, 33709, use_internal=True, ext_mask=vsutil.depth(scrad_ed_mask, 10))

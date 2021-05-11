@@ -5,7 +5,6 @@ import kagefunc as kgf
 import vsutil
 import mvsfunc as mvf
 import havsfunc as haf
-from vardefunc import diff_creditless_mask as dcm
 from placebo import deband as pdb
 core = vs.core
 
@@ -21,10 +20,12 @@ def Scredit_mask(luma):
     _mask = vsutil.iterate(_mask, core.std.Inflate, 6)
     return _mask
 
-NCOP = OP()[24:-24]
+op_src = lvf.src(r"D:\Releases\Sources\[BDMV][Anima Yell!][アニマエール!][Vol.1-Vol.4 Fin]\[BDMV][181226]アニマエール! Vol.1\BD\BDMV\STREAM\00007.m2ts")
+NCOP = OP(op_src)[24:-24]
 opstart = 2038
 opend = 4197
-NCED = ED()[24:-24]
+ed_src = lvf.src(r"D:\Releases\Sources\[BDMV][Anima Yell!][アニマエール!][Vol.1-Vol.4 Fin]\[BDMV][181226]アニマエール! Vol.1\BD\BDMV\STREAM\00008.m2ts")
+NCED = ED(op_src)[24:-24]
 edstart = 31794
 edend = 33952
 

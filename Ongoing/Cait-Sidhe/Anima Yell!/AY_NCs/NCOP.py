@@ -7,8 +7,8 @@ import mvsfunc as mvf
 import havsfunc as haf
 from placebo import deband as pdb
 core = vs.core
-def OP():
-    src = lvf.src(r"D:\Releases\Sources\[BDMV][Anima Yell!][アニマエール!][Vol.1-Vol.4 Fin]\[BDMV][181226]アニマエール! Vol.1\BD\BDMV\STREAM\00007.m2ts")
+def OP(op_in):
+    src = op_in
     # Rescale using a modified version of Zastin's dogahomo()
     rescale = rvs.questionable_rescale(vsutil.depth(src, 16), 810, b=1/3, c=1/3, mask_thresh=0.05)
 
