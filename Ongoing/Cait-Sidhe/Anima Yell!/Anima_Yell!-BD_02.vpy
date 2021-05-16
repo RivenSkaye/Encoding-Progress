@@ -7,25 +7,14 @@ import mvsfunc as mvf
 import havsfunc as haf
 from placebo import deband as pdb
 core = vs.core
+core.max_cache_size = 10240
 
 from AY_NCs import OP, ED
 
-# porting this to something that's a bit more flexible for ep3 onwards
-def Scredit_mask(luma):
-    luma = vsutil.depth(luma, 32)
-    _descaled = core.descale.Debicubic(luma, vsutil.get_w(810), 810, b=0.2, c=0.4)
-    _rescaled = core.resize.Bicubic(_descaled, 1920, 1080)
-    _mask = core.std.Expr([vsutil.depth(luma, 32), _rescaled], 'x y - abs 0.060 < 0 1 ?')
-    _mask = vsutil.iterate(_mask, core.std.Maximum, 6)
-    _mask = vsutil.iterate(_mask, core.std.Inflate, 6)
-    return _mask
-
 op_src = lvf.src(r"D:\Releases\Sources\[BDMV][Anima Yell!][アニマエール!][Vol.1-Vol.4 Fin]\[BDMV][181226]アニマエール! Vol.1\BD\BDMV\STREAM\00007.m2ts")
-NCOP = OP(op_src)[24:-24]
 opstart = 2038
 opend = 4197
 ed_src = lvf.src(r"D:\Releases\Sources\[BDMV][Anima Yell!][アニマエール!][Vol.1-Vol.4 Fin]\[BDMV][181226]アニマエール! Vol.1\BD\BDMV\STREAM\00008.m2ts")
-NCED = ED(op_src)[24:-24]
 edstart = 31794
 edend = 33952
 
@@ -62,9 +51,12 @@ grain = kgf.adaptive_grain(deband, luma_scaling=7)
 out = vsutil.depth(grain, 10)
 
 # Merge credits onto the NCs and splice it in
-scrad_op_mask = Scredit_mask(vsutil.get_y(src))[2038:4197]
-scrad_ed_mask = Scredit_mask(vsutil.get_y(src))[31794:33952]
+credit_mask = rvs.Scradit_mask(src, b=0.2, c=0.4, height=810, iters=6)
+scrad_op_mask = credit_mask[2038:4197]
+scrad_ed_mask = credit_mask[31794:33952]
+NCOP = OP(op_src)[24:-24]
 spliced = rvs.nc_splice(out, NCOP, opstart, opend, use_internal=True, ext_mask=vsutil.depth(scrad_op_mask, 10))
+NCED = ED(op_src)[24:-24]
 spliced = rvs.nc_splice(out, NCED, edstart, edend, use_internal=True, ext_mask=vsutil.depth(scrad_ed_mask, 10))
 
 # Output and done

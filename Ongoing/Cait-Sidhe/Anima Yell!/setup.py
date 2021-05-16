@@ -1,8 +1,8 @@
 import setuptools
 
 name = "AY_NCs"
-version = "0.0.1"
-release = "0.0.1"
+version = "0.0.2"
+release = "0.0.2"
 
 setuptools.setup(
     name=name,

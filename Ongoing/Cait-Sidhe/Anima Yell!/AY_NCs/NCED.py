@@ -7,7 +7,7 @@ import mvsfunc as mvf
 import havsfunc as haf
 from placebo import deband as pdb
 core = vs.core
-def ED(ed_in):
+def ED(ed_in: vs.VideoNode) -> vs.VideoNode:
     src = ed_in
     # Rescale using a modified version of Zastin's dogahomo()
     rescale = rvs.questionable_rescale(vsutil.depth(src, 16), 810, b=1/3, c=1/3, mask_thresh=0.05)
