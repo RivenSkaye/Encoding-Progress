@@ -17,8 +17,8 @@ opend = 4197
 ed_src = lvf.src(r"D:\Releases\Sources\[BDMV][Anima Yell!][アニマエール!][Vol.1-Vol.4 Fin]\[BDMV][181226]アニマエール! Vol.1\BD\BDMV\STREAM\00008.m2ts")
 edstart = 31794
 edend = 33952
-
-src = lvf.src(r"D:\Releases\Sources\[BDMV][Anima Yell!][アニマエール!][Vol.1-Vol.4 Fin]\[BDMV][181226]アニマエール! Vol.1\BD\BDMV\STREAM\00004.m2ts")
+src_file = r"D:\Releases\Sources\[BDMV][Anima Yell!][アニマエール!][Vol.1-Vol.4 Fin]\[BDMV][181226]アニマエール! Vol.1\BD\BDMV\STREAM\00004.m2ts"
+src = lvf.src(src_file)
 # Rescale using a modified version of Zastin's dogahomo()
 rescale = rvs.questionable_rescale(vsutil.depth(src, 16), 810, b=0.2, c=0.4, mask_thresh=0.05)
 
@@ -58,6 +58,11 @@ NCOP = OP(op_src)[24:-24]
 spliced = rvs.nc_splice(out, NCOP, opstart, opend, use_internal=True, ext_mask=vsutil.depth(scrad_op_mask, 10))
 NCED = ED(op_src)[24:-24]
 spliced = rvs.nc_splice(out, NCED, edstart, edend, use_internal=True, ext_mask=vsutil.depth(scrad_ed_mask, 10))
+spliced = spliced[24:-24]
 
 # Output and done
-spliced[24:-24].set_output()
+spliced.set_output()
+
+if __name__ == '__vapoursynth__':
+    from acsuite import eztrim
+    eztrim(src_file, trims=(24,-24), ref_clip=spliced, outfile=r"D:\Releases\Cait-Sidhe\Anima Yell!\Anima_Yell-e02.mka")

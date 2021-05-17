@@ -2,3 +2,8 @@
 *workraw*.vpy
 *.egg-info/
 __pycache__/
+.vspreview/
+
+# IDE files #
+*.komodoproject
+.komodotools/
