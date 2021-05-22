@@ -53,17 +53,18 @@ out = vsutil.depth(grain, 10)
 
 # Merge credits onto the NCs and splice it in
 credit_mask = rvs.Scradit_mask(src, b=0.2, c=0.4, height=810, iters=6)
-scrad_op_mask = credit_mask[2038:4197]
-scrad_ed_mask = credit_mask[31794:33952]
+scrad_op_mask = credit_mask[opstart:opend]
+scrad_ed_mask = credit_mask[edstart:edend]
 NCOP = OP(op_src)[24:-24]
 spliced = rvs.nc_splice(out, NCOP, opstart, opend, use_internal=True, ext_mask=vsutil.depth(scrad_op_mask, 10))
-NCED = ED(op_src)[24:-24]
+NCED = ED(ed_src)[24:-24]
 spliced = rvs.nc_splice(out, NCED, edstart, edend, use_internal=True, ext_mask=vsutil.depth(scrad_ed_mask, 10))
 spliced = spliced[24:-24]
 
 # Output and done
-spliced.set_output()
+spliced[edend-29:edend+19].set_output()
 
 if __name__ == '__vapoursynth__':
+    raise Error("HODOR")
     from acsuite import eztrim
     eztrim(src_file, trims=(24,-24), ref_clip=spliced, outfile=r"D:\Releases\Cait-Sidhe\Anima Yell!\Anima_Yell-e02.mka")
