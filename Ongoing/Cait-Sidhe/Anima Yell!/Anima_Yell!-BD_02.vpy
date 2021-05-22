@@ -62,7 +62,7 @@ spliced = rvs.nc_splice(out, NCED, edstart, edend, use_internal=True, ext_mask=v
 spliced = spliced[24:-24]
 
 # Output and done
-spliced[edend-29:edend+19].set_output()
+spliced.set_output()
 
 if __name__ == '__vapoursynth__':
     from acsuite import eztrim
