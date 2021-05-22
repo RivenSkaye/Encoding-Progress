@@ -65,6 +65,5 @@ spliced = spliced[24:-24]
 spliced[edend-29:edend+19].set_output()
 
 if __name__ == '__vapoursynth__':
-    raise Error("HODOR")
     from acsuite import eztrim
     eztrim(src_file, trims=(24,-24), ref_clip=spliced, outfile=r"D:\Releases\Cait-Sidhe\Anima Yell!\Anima_Yell-e02.mka")
