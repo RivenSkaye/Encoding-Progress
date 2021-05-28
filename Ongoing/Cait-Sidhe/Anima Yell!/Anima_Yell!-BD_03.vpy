@@ -57,6 +57,7 @@ scrad_op_mask = credit_mask[opstart:opend]
 scrad_ed_mask = credit_mask[edstart:edend]
 # Small fix to pick up the Doga Kobo logo properly
 scrad_ed_mask = core.morpho.Close(vsutil.depth(scrad_ed_mask, 10), size=9).std.Binarize()
+# The OP is a single frame shorter in this ep
 NCOP = OP(op_src)[24:-25]
 spliced = rvs.nc_splice(out, NCOP, opstart, opend, use_internal=True, ext_mask=vsutil.depth(scrad_op_mask, 10))
 NCED = ED(ed_src)[24:-24]
