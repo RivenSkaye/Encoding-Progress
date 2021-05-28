@@ -12,11 +12,11 @@ core.max_cache_size = 10240
 from AY_NCs import OP, ED
 
 op_src = lvf.src(r"D:\Releases\Sources\[BDMV][Anima Yell!][アニマエール!][Vol.1-Vol.4 Fin]\[BDMV][181226]アニマエール! Vol.1\BD\BDMV\STREAM\00007.m2ts")
-opstart = 2038
-opend = 4197
+opstart = 744
+opend = 2902 #4197
 ed_src = lvf.src(r"D:\Releases\Sources\[BDMV][Anima Yell!][アニマエール!][Vol.1-Vol.4 Fin]\[BDMV][181226]アニマエール! Vol.1\BD\BDMV\STREAM\00008.m2ts")
-edstart = 31794
-edend = 33952
+edstart = 31792
+edend = 33949
 
 src_file = r"D:\Releases\Sources\[BDMV][Anima Yell!][アニマエール!][Vol.1-Vol.4 Fin]\[BDMV][181226]アニマエール! Vol.1\BD\BDMV\STREAM\00005.m2ts"
 src = lvf.src(src_file)
@@ -55,14 +55,16 @@ out = vsutil.depth(grain, 10)
 credit_mask = rvs.Scradit_mask(src, b=0.2, c=0.4, height=810, iters=6)
 scrad_op_mask = credit_mask[opstart:opend]
 scrad_ed_mask = credit_mask[edstart:edend]
-NCOP = OP(op_src)[24:-24]
+# Small fix to pick up the Doga Kobo logo properly
+scrad_ed_mask = core.morpho.Close(vsutil.depth(scrad_ed_mask, 10), size=9).std.Binarize()
+NCOP = OP(op_src)[24:-25]
 spliced = rvs.nc_splice(out, NCOP, opstart, opend, use_internal=True, ext_mask=vsutil.depth(scrad_op_mask, 10))
 NCED = ED(ed_src)[24:-24]
 spliced = rvs.nc_splice(out, NCED, edstart, edend, use_internal=True, ext_mask=vsutil.depth(scrad_ed_mask, 10))
 spliced = spliced[24:-24]
 
 # Output and done
-spliced[edend-29:edend+19].set_output()
+spliced.set_output()
 
 if __name__ == '__vapoursynth__':
     from acsuite import eztrim
