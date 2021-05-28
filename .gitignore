@@ -3,6 +3,7 @@
 *.egg-info/
 __pycache__/
 .vspreview/
+*patching.vpy
 
 # IDE files #
 *.komodoproject
