@@ -59,7 +59,6 @@ spliced = rvs.nc_splice(out, NCOP, opstart, opend, use_internal=True, ext_mask=v
 spliced = spliced[24:-24]
 
 # Output and done
-#spliced.set_output()
 spliced.set_output()
 
 if __name__ == '__vapoursynth__':
