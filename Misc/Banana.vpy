@@ -47,8 +47,9 @@ deband_a = core.f3kdb.Deband(dehalo, range=16, y=24, cb=16, cr=16, grainy=14, gr
 deband = core.std.MaskedMerge(deband_a, dehalo, det_mask)
 
 out = kgf.adaptive_grain(deband, strength=0.5, luma_scaling=8)
+out = vsutil.depth(out, 8)
 out.set_output()
 
 if __name__ == '__vapoursynth__':
     from acsuite import eztrim
-    eztrim(src_file, trims=(20670,22200), ref_clip=spliced, outfile=r"F:\Banana\ins.mka")
+    eztrim(src_file, trims=(20670,22200), outfile=r"D:\banana.mka")
