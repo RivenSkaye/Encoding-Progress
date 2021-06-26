@@ -63,7 +63,7 @@ NCED = ED(ed_src)[24:-26]
 spliced = rvs.nc_splice(out, NCED, edstart, edend, use_internal=True, ext_mask=scrad_ed_mask)
 spliced = spliced[24:-24]
 
-# Output and done
+# Output and done.
 spliced.set_output()
 
 if __name__ == '__vapoursynth__':
