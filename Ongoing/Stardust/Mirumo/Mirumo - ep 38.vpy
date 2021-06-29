@@ -17,7 +17,7 @@ src_epilogue = lvf.src(r"D:\Releases\Sources\Mirumo\Volume 10\fulldisc\ep38 - 5 
 
 def preshift(src):
     # Deinterlace and convert to 16 bit for working in high precision
-    deint_a = lvf.deinterlace.decomb(src_a, TFF=True, decimate=False)
+    deint = lvf.deinterlace.decomb(src, TFF=True, decimate=False)
     # Decimate on EXTREMELY narrow thresholds. Artifacting is fairly consistent across frames here
     decim = core.vivtc.VDecimate(deint, cycle=5, chroma=False, dupthresh=0.6, blockx=4, blocky=4)
     decim = vsutil.depth(decim, 16)
@@ -34,14 +34,14 @@ res_yc, uc, vc = preshift(src_epilogue)
 
 # The chromashift fixing game! Let's start with A.
 # 00000 - xxxxx:
-res_ua = core.resize.Spline16(ua, height=resize_y.height/2, src_left=0)
+res_ua = core.resize.Spline16(ua, height=res_ya.height/2, src_left=0)
 
-res_va = core.resize.Spline16(va, height=resize_y.height/2, src_left=0)
+res_va = core.resize.Spline16(va, height=res_ya.height/2, src_left=0)
 
 # merge the clips to a full YUV vid again
 resize_a = core.std.ShufflePlanes([res_ya, res_ua, res_va], [0,0,0], vs.YUV)
-resize_b = core.std.ShufflePlanes([res_yb, res_ub, res_vb], [0,0,0], vs.YUV)
-resize_c = core.std.ShufflePlanes([res_yc, res_uc, res_vc], [0,0,0], vs.YUV)
+#resize_b = core.std.ShufflePlanes([res_yb, res_ub, res_vb], [0,0,0], vs.YUV)
+#resize_c = core.std.ShufflePlanes([res_yc, res_uc, res_vc], [0,0,0], vs.YUV)
 
 resize_a.set_output()
 
@@ -70,7 +70,7 @@ def postshift(resize) -> vs.VideoNode:
     out = vsutil.depth(grain, 10)
 
 post_a = postshift(resize_a)
-post_b = postshift(resize_b)
-post_c = postshift(resize_c)
-out = OP+post_a+post_b+ED+post_c
+#post_b = postshift(resize_b)
+#post_c = postshift(resize_c)
+#out = OP+post_a+post_b+ED+post_c
 #out.set_output()
