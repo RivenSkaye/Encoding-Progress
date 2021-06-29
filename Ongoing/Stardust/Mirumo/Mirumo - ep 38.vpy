@@ -8,9 +8,9 @@ import mvsfunc as mvf
 core = vs.core
 core.max_cache_size = 8192
 
-from Mirumo_NCs import NCOP2, NCED2
-OP = NCOP2()
-ED = NCED2()
+from Mirumo_NCs import OP2, ED2
+OP = OP2()
+ED = ED2()
 src_a = lvf.src(r"D:\Releases\Sources\Mirumo\Volume 10\fulldisc\ep38 - 2 - Part A.mkv", force_lsmas=True)
 src_b = lvf.src(r"D:\Releases\Sources\Mirumo\Volume 10\fulldisc\ep38 - 3 - Part B.mkv", force_lsmas=True)
 src_epilogue = lvf.src(r"D:\Releases\Sources\Mirumo\Volume 10\fulldisc\ep38 - 5 - epilogue.mkv", force_lsmas=True)
@@ -32,12 +32,18 @@ res_ya, ua, va = preshift(src_a)
 res_yb, ub, vb = preshift(src_b)
 res_yc, uc, vc = preshift(src_epilogue)
 
-# Insert magic chromashift fixing bullshit here
+# The chromashift fixing game! Let's start with A.
+# 00000 - xxxxx:
+res_ua = core.resize.Spline16(ua, height=resize_y.height/2, src_left=0)
+
+res_va = core.resize.Spline16(va, height=resize_y.height/2, src_left=0)
 
 # merge the clips to a full YUV vid again
 resize_a = core.std.ShufflePlanes([res_ya, res_ua, res_va], [0,0,0], vs.YUV)
 resize_b = core.std.ShufflePlanes([res_yb, res_ub, res_vb], [0,0,0], vs.YUV)
 resize_c = core.std.ShufflePlanes([res_yc, res_uc, res_vc], [0,0,0], vs.YUV)
+
+resize_a.set_output()
 
 def postshift(resize) -> vs.VideoNode:
     # Crop off the black edges, it's bloat for modern playback
@@ -67,4 +73,4 @@ post_a = postshift(resize_a)
 post_b = postshift(resize_b)
 post_c = postshift(resize_c)
 out = OP+post_a+post_b+ED+post_c
-out.set_output()
+#out.set_output()
