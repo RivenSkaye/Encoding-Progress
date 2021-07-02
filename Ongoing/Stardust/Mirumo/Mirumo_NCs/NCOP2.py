@@ -43,7 +43,7 @@ def NCOP2() -> vs.VideoNode:
     lines = core.std.MaskedMerge(scaled, merged, mask)
 
     # Magic chromashift fixing bullshit, invented just for this!
-    shifted = INOX.chromashifter(lines)
+    shifted = INOX.chromashifter(lines, maskfunc=kgf.kirsch)
 
     deband = core.f3kdb.Deband(shifted, range=16, y=24, cb=18, cr=18, grainy=14, grainc=9, output_depth=16)
 
