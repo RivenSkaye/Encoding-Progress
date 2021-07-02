@@ -50,7 +50,7 @@ def NCOP2() -> vs.VideoNode:
     broken = lines[436:538]
     after = lines[537:]
     shifted_a = INOX.chromashifter(before, maskfunc=masker)
-    shifted_b = INOX.chromashifter(broken)
+    shifted_b = INOX.chromashifter(broken, maskfunc=kgf.kirsch, wthresh=15)
     shifted_c = INOX.chromashifter(after, maskfunc=masker)
     shifted = shifted_a+shifted_b+shifted_c
 
