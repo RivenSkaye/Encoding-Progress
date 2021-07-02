@@ -47,12 +47,22 @@ def NCOP2() -> vs.VideoNode:
     masker = partial(core.std.Convolution, matrix=[-1] * 4 + [8] + [-1] * 4,
                  planes=[0, 1, 2], saturate=False)
     before = lines[:437]
-    broken = lines[436:538]
-    after = lines[537:]
+    broken1 = lines[437:538]
+    after = lines[538:1435]
+    broken2 = lines[1435:1518]
+    final = lines[1518:]
     shifted_a = INOX.chromashifter(before, maskfunc=masker)
-    shifted_b = INOX.chromashifter(broken, maskfunc=kgf.kirsch, wthresh=15)
+    bry, bru, brv = vsutil.split(broken1)
+    bru = bru.resize.Spline64(src_left=1.3)
+    brv = brv.resize.Spline64(src_left=1.3)
+    shifted_b = vsutil.join([bry,bru,brv])
     shifted_c = INOX.chromashifter(after, maskfunc=masker)
-    shifted = shifted_a+shifted_b+shifted_c
+    bry, bru, brv = vsutil.split(broken2)
+    bru = bru.resize.Spline64(src_left=1.5)
+    brv = brv.resize.Spline64(src_left=1.5)
+    shifted_d = vsutil.join([bry,bru,brv])
+    shifted_e = INOX.chromashifter(final, maskfunc=masker)
+    shifted = shifted_a+shifted_b+shifted_c+shifted_d+shifted_e
 
     deband = core.f3kdb.Deband(shifted, range=16, y=24, cb=18, cr=18, grainy=14, grainc=9, output_depth=16)
 
