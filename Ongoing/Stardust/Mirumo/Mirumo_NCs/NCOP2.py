@@ -6,6 +6,7 @@ import nnedi3_rpow2
 import havsfunc as haf
 import mvsfunc as mvf
 import rvsfunc as INOX
+from functools import partial
 core = vs.core
 core.max_cache_size = 8192
 
@@ -43,9 +44,29 @@ def NCOP2() -> vs.VideoNode:
     lines = core.std.MaskedMerge(scaled, merged, mask)
 
     # Magic chromashift fixing bullshit, invented just for this!
-    shifted = INOX.chromashifter(lines, maskfunc=kgf.kirsch)
+    masker = partial(core.std.Convolution, matrix=[-1] * 4 + [8] + [-1] * 4,
+                 planes=[0, 1, 2], saturate=False)
+    before = lines[:437]
+    broken = lines[436:538]
+    after = lines[537:]
+    shifted_a = INOX.chromashifter(before, maskfunc=masker)
+    shifted_b = INOX.chromashifter(broken)
+    shifted_c = INOX.chromashifter(after, maskfunc=masker)
+    shifted = shifted_a+shifted_b+shifted_c
 
     deband = core.f3kdb.Deband(shifted, range=16, y=24, cb=18, cr=18, grainy=14, grainc=9, output_depth=16)
+
+    # This scene has some special issues. So we're replacing a few frames.
+    # No idea why this scene specifically had these issues
+    # Until offending frame + replacement  + Remaining clip
+    replace = deband[:1534] + deband[1535] + deband[1535:]
+    replace = replace[:1538] + replace[1539] + replace[1539:]
+    replace = replace[:1542] + replace[1543] + replace[1543:]
+    replace = replace[:1550] + replace[1551] + replace[1551:]
+    replace = replace[:1554] + replace[1555] + replace[1555:]
+    replace = replace[:1570] + replace[1571] + replace[1571:]
+    replace = replace[:1573] + replace[1572] + replace[1574:]
+    replace = replace[:1577] + replace[1576] + replace[1578:]
 
     grain = kgf.adaptive_grain(deband, 0.2, luma_scaling=6.5)
     out = vsutil.depth(grain, 10)
