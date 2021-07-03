@@ -11,8 +11,8 @@ core.max_cache_size = 10240
 
 from AY_NCs import OP, ED
 
-# OP has some nice v2 visuals that reflect the series progress!
-op_src = lvf.src(r"D:\Releases\Sources\[BDMV][Anima Yell!][アニマエール!][Vol.1-Vol.4 Fin]\[BDMV][190213]アニマエール! Vol.3\BD\BDMV\STREAM\00007.m2ts")
+# OP has some nice v2 visuals that reflect the series progress! From ep 9 onwards
+op_src = lvf.src(r"D:\Releases\Sources\[BDMV][Anima Yell!][アニマエール!][Vol.1-Vol.4 Fin]\[BDMV][181226]アニマエール! Vol.1\BD\BDMV\STREAM\00007.m2ts")
 opstart = 648
 opend = 2805
 # Same for the ED!!
