@@ -16,7 +16,7 @@ op_src = lvf.src(r"D:\Releases\Sources\[BDMV][Anima Yell!][アニマエール!][
 opstart = 648
 opend = 2805
 # Same for the ED!!
-ed_src = lvf.src(r"D:\Releases\Sources\[BDMV][Anima Yell!][アニマエール!][Vol.1-Vol.4 Fin]\[BDMV][190213]アニマエール! Vol.3\BD\BDMV\STREAM\00008.m2ts")
+ed_src = lvf.src(r"D:\Releases\Sources\[BDMV][Anima Yell!][アニマエール!][Vol.1-Vol.4 Fin]\[BDMV][181226]アニマエール! Vol.1\BD\BDMV\STREAM\00008.m2ts")
 edstart = 31793
 edend = 33949
 
@@ -61,7 +61,7 @@ scrad_ed_mask = credit_mask[edstart:edend]
 scrad_ed_mask = core.morpho.Close(vsutil.depth(scrad_ed_mask, 10), size=9).std.Binarize()
 NCOP = OP(op_src)[24:-25]
 spliced = rvs.nc_splice(out, NCOP, opstart, opend, use_internal=True, ext_mask=vsutil.depth(scrad_op_mask, 10))
-NCED = ED(ed_src)[24:-25]
+NCED = ED(ed_src)[25:-24]
 spliced = rvs.nc_splice(out, NCED, edstart, edend, use_internal=True, ext_mask=scrad_ed_mask)
 spliced = spliced[24:-24]
 
