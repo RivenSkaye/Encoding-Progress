@@ -68,7 +68,7 @@ empty = core.std.BlankClip(op_src, length=2)
 
 # Output and done
 spliced.set_output()
-"""
+
 if __name__ == '__vapoursynth__':
     from acsuite import eztrim
-    eztrim(src_file, trims=(24,-24), ref_clip=spliced, outfile=r"D:\Releases\Cait-Sidhe\Anima Yell!\Anima_Yell-e08.mka")"""
+    eztrim(src_file, trims=(24,-24), ref_clip=spliced, outfile=r"D:\Releases\Cait-Sidhe\Anima Yell!\Anima_Yell-e09.mka")
