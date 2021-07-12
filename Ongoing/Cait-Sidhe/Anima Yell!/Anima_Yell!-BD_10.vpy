@@ -63,7 +63,6 @@ spliced = rvs.nc_splice(out, NCOP, opstart, opend, use_internal=True, ext_mask=v
 NCED = ED(ed_src)[24:-25]
 spliced = rvs.nc_splice(out, NCED, edstart, edend, use_internal=True, ext_mask=scrad_ed_mask)
 spliced = spliced[24:-24]
-
 # Output and done
 spliced.set_output()
 
