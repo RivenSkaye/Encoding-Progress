@@ -65,7 +65,7 @@ spliced = rvs.nc_splice(out, NCED, edstart, edend, use_internal=True, ext_mask=s
 spliced = spliced[24:-24]
 # Output and done
 spliced.set_output()
-"""
+
 if __name__ == '__vapoursynth__':
     from acsuite import eztrim
-    eztrim(src_file, trims=(24,-24), ref_clip=spliced, outfile=r"D:\Releases\Cait-Sidhe\Anima Yell!\Anima_Yell-e11.mka")"""
+    eztrim(src_file, trims=(24,-24), ref_clip=spliced, outfile=r"D:\Releases\Cait-Sidhe\Anima Yell!\Anima_Yell-e11.mka")
