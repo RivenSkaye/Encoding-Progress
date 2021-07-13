@@ -19,7 +19,7 @@ ed_src = lvf.src(r"D:\Releases\Sources\[BDMV][Anima Yell!][アニマエール!][
 edstart = 31792
 edend = 33948
 
-src_file = r"D:\Releases\Sources\[BDMV][Anima Yell!][アニマエール!][Vol.1-Vol.4 Fin]\[BDMV][190213]アニマエール! Vol.4\BD\BDMV\STREAM\00003.m2ts"
+src_file = r"D:\Releases\Sources\[BDMV][Anima Yell!][アニマエール!][Vol.1-Vol.4 Fin]\[BDMV][190213]アニマエール! Vol.4\BD\BDMV\STREAM\00004.m2ts"
 src = lvf.src(src_file)
 # Rescale using a modified version of Zastin's dogahomo()
 rescale = rvs.questionable_rescale(vsutil.depth(src, 16), 810, b=0.2, c=0.4, mask_thresh=0.05)
