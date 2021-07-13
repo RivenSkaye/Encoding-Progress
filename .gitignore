@@ -8,3 +8,6 @@ __pycache__/
 # IDE files #
 *.komodoproject
 .komodotools/
+
+# Memes get written here #
+test.vpy
