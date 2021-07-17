@@ -17,7 +17,7 @@ deep = vsutil.depth(src, 16)
 denoise_y = core.knlm.KNLMeansCL(deep, d=2, a=2, s=3, h=1.2, channels="Y")
 denoise_c = core.knlm.KNLMeansCL(deep, d=1, a=2, s=2, h=0.8, channels="UV")
 denoise_a = core.std.ShufflePlanes([denoise_y,denoise_c,denoise_c], [0,1,2], colorfamily=vs.YUV)
-denoise_b = mvf.BM3D(deep, sigma=[2.1], ref=denoise_a, profile1="fast", profile2="fast", refine=1, radius1=3)
+denoise_b = mvf.BM3D(deep, sigma=[2.1], ref=denoise_a, profile1="fast", radius1=3)
 denoise = core.std.ShufflePlanes([denoise_b,denoise_a,denoise_a], [0,1,2], colorfamily=vs.YUV)
 
 aa = lvf.aa.nneedi3_clamp(denoise, strength=1.1, mthr=0.30)
