@@ -4,6 +4,8 @@
 __pycache__/
 .vspreview/
 *patching.vpy
+automate.cmd
+episodes.txt
 
 # IDE files #
 *.komodoproject
