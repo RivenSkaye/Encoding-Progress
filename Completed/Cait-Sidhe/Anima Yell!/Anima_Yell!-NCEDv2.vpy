@@ -5,9 +5,10 @@ core.max_cache_size = 10240
 from AY_NCs import ED as NCED
 
 src_file = r"D:\Releases\Sources\[BDMV][Anima Yell!][アニマエール!][Vol.1-Vol.4 Fin]\[BDMV][190213]アニマエール! Vol.3\BD\BDMV\STREAM\00008.m2ts"
-out = NCED(src(src_file))[24:-24]
+sauce = src(src_file)
+out = NCED(sauce)[24:-24]
 out.set_output()
 
 if __name__ == '__vapoursynth__':
     from acsuite import eztrim
-    eztrim(src_file, trims=(24,-24), ref_clip=out, outfile=r"D:\Releases\Cait-Sidhe\Anima Yell!\Anima_Yell-NCEDv2.mka")
+    eztrim(src_file, trims=(24,-24), ref_clip=sauce, outfile=r"D:\Releases\Cait-Sidhe\Anima Yell!\Anima_Yell-NCEDv2.mka")
