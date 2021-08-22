@@ -10,6 +10,7 @@ automate.cmd
 # IDE files #
 *.komodoproject
 .komodotools/
+*.log
 
 # Memes get written here #
 test.vpy
