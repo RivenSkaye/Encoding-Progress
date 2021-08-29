@@ -1,5 +1,4 @@
 **/cudnn_data/
-*workraw*.vpy
 *.egg-info/
 __pycache__/
 .vspreview/
@@ -14,3 +13,7 @@ automate.cmd
 
 # Memes get written here #
 test.vpy
+
+# Workraw Stuff #
+*wraw*.vpy
+*workraw*.vpy
