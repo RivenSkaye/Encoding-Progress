@@ -2,8 +2,9 @@
 *.egg-info/
 __pycache__/
 .vspreview/
-*patching.vpy
-automate.cmd
+*patching.vpy # Video patches
+*patching.py # Audio or batching patches
+automate.cmd # Running 'em all
 *episodes*.txt
 
 # IDE files #
