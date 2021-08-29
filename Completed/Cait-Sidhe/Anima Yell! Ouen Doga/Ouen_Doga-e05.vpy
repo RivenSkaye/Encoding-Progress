@@ -11,8 +11,8 @@ epstring = f"0{epnum}" if epnum < 10 else str(epnum)
 filenum = epnum+6
 filestring = f"0{filenum}" if filenum < 10 else str(filenum)
 src_file = f"D:/Releases/Sources/[BDMV][Anima Yell!][アニマエール!][Vol.1-Vol.4 Fin]/[BDMV][190213]アニマエール! Vol.4/BD/BDMV/STREAM/000{filestring}.m2ts"
-src = lvf.src(src_file)[24:-24]
-deep = vsutil.depth(src, 16)
+src = lvf.src(src_file)
+deep = vsutil.depth(src[24:-24], 16)
 
 denoise_y = core.knlm.KNLMeansCL(deep, d=2, a=2, s=3, h=1.2, channels="Y")
 denoise_c = core.knlm.KNLMeansCL(deep, d=1, a=2, s=2, h=0.8, channels="UV")
