@@ -46,7 +46,7 @@ def NCED2() -> vs.VideoNode:
     # Magic chromashift fixing bullshit, invented just for this!
     masker = partial(core.std.Convolution, matrix=[-1] * 4 + [8] + [-1] * 4,
                  planes=[0, 1, 2], saturate=False)
-    shifted = INOX.chromashifter(lines, maskfunc=masker)
+    shifted = INOX.dvd.chromashifter(lines, maskfunc=masker)
 
     deband = core.f3kdb.Deband(shifted, range=16, y=24, cb=14, cr=14, grainy=18, grainc=3, output_depth=16)
 

@@ -51,17 +51,17 @@ def NCOP2() -> vs.VideoNode:
     after = lines[538:1435]
     broken2 = lines[1435:1518]
     final = lines[1518:]
-    shifted_a = INOX.chromashifter(before, maskfunc=masker)
+    shifted_a = INOX.dvd.chromashifter(before, maskfunc=masker)
     bry, bru, brv = vsutil.split(broken1)
     bru = bru.resize.Spline64(src_left=1.3)
     brv = brv.resize.Spline64(src_left=1.3)
     shifted_b = vsutil.join([bry,bru,brv])
-    shifted_c = INOX.chromashifter(after, maskfunc=masker)
+    shifted_c = INOX.dvd.chromashifter(after, maskfunc=masker)
     bry, bru, brv = vsutil.split(broken2)
     bru = bru.resize.Spline64(src_left=1.5)
     brv = brv.resize.Spline64(src_left=1.5)
     shifted_d = vsutil.join([bry,bru,brv])
-    shifted_e = INOX.chromashifter(final, maskfunc=masker)
+    shifted_e = INOX.dvd.chromashifter(final, maskfunc=masker)
     shifted = shifted_a+shifted_b+shifted_c+shifted_d+shifted_e
 
     deband = core.f3kdb.Deband(shifted, range=16, y=24, cb=18, cr=18, grainy=14, grainc=9, output_depth=16)
