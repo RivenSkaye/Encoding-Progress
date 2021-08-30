@@ -5,7 +5,7 @@ import kagefunc as kgf
 import vsutil
 import mvsfunc as mvf
 import havsfunc as haf
-from placebo import deband as pdb
+from debandshit import placebo_deband as pdb
 core = vs.core
 def ED(ed_in: vs.VideoNode) -> vs.VideoNode:
     src = ed_in

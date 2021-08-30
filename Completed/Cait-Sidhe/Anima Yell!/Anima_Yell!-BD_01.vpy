@@ -5,7 +5,7 @@ import kagefunc as kgf
 import vsutil
 import mvsfunc as mvf
 import havsfunc as haf
-from placebo import deband as pdb
+from debandshit import placebo_deband as pdb
 core = vs.core
 core.max_cache_size = 10240
 # This show uses the OP as ED for ep 1

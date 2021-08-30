@@ -3,7 +3,7 @@ import lvsfunc as lvf
 import kagefunc as kgf
 import vsutil
 import mvsfunc as mvf
-from placebo import deband as pdb
+from debandshit import placebo_deband as pdb
 core = vs.core
 core.max_cache_size = 10240
 epnum = 10
