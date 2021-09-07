@@ -10,6 +10,8 @@ automate.cmd
 *.komodoproject
 .komodotools/
 *.log
+*.code-workspace
+.vscode
 
 # Memes get written here #
 test.vpy
