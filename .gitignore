@@ -19,3 +19,6 @@ test.vpy
 # Workraw Stuff #
 *wraw*.vpy
 *workraw*.vpy
+
+# Why does this have to go into the cwd?
+*.lwi
