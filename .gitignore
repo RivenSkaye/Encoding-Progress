@@ -22,3 +22,4 @@ test.vpy
 
 # Why does this have to go into the cwd?
 *.lwi
+*.txt
