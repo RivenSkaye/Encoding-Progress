@@ -1,2 +1,52 @@
 [flake8]
-extend-exclude = ./**
+# Standard Flake8 options
+extend-exclude =
+    # The usual suspects
+    .git,
+    .github,
+    .vscode,
+    build,
+    dist,
+    __pycache__,
+    *.egg-info,
+    setup.cfg,
+    setup.py,
+    docs,
+    mypy-stubs,
+    *.pyi,
+    rvsfunc/__init__.py,
+    test.vpy
+# "FOUR SPACES, ONE RELIGION" -- Vardë
+indent-size = 4
+# I'll increase this by popular demand. No more than 85 though!
+max-line-length = 85
+# Same length for docstrings
+max-doc-length = 85
+hang-closing = False
+# Selecting additional Flake8 plugins
+extend-select =
+    # Fix your comprehensions
+    C4,
+    # Flake8-raise warnings
+    R1,
+    # Flake8-return
+    R5,
+    # Flake8-noqa. Ensures noqa lines don't accidentally blanket or die
+    NQA,
+    # Yes, I care about quotes. Deal with it.
+    Q0,
+    # rst docstrings formatting checker
+    RST,
+    # This is a blessing for Sphinx specifically
+    SXL001,
+    # Typing collections. This is mostly for readability of code.
+    TYCO1
+extend-ignore =
+    TYCO2,
+    RST301,
+    RST201
+# Quotes plugin: I like 'em double
+inline-quotes = double
+# Flake8-NOQA: Require codes
+noqa-require-code = True
+noqa-include-name = True
