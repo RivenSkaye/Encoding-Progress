@@ -5,6 +5,7 @@ __pycache__/
 *patch*py
 automate.cmd
 *episodes*.txt
+.mypy_cache
 
 # IDE files #
 *.komodoproject
